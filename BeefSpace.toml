@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {Beef-FMOD = {Path = "."}}
+
+[Workspace]
+StartupProject = "Beef-FMOD"

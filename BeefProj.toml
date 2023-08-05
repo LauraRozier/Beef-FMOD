@@ -1,0 +1,30 @@
+FileVersion = 1
+
+[Project]
+Name = "Beef-FMOD"
+TargetType = "BeefLib"
+StartupObject = "Beef_FMOD.Program"
+
+[Configs.Debug.Win32]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Debug.Win64]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Release.Win32]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Release.Win64]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Paranoid.Win32]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Paranoid.Win64]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Test.Win32]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]
+
+[Configs.Test.Win64]
+PostBuildCmds = ["CopyToDependents(\"$(ProjectDir)/dist/win64/*.dll\")"]

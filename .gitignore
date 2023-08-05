@@ -1,0 +1,6 @@
+build
+BeefSpace_User.toml
+recovery
+
+dist/win32/*.dll
+dist/win64/*.dll
