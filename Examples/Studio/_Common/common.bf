@@ -123,7 +123,7 @@ public static
 			if (newline > -1)
 			{
 				consumeNewLine = true;
-				copyLength = string.Length - newline;
+				copyLength = newline;
 			}
 
 			if (copyLength > NUM_COLUMNS)
