@@ -557,8 +557,14 @@ public struct FMOD_STUDIO
 			FMOD_Studio_System_SetListenerWeight(handle, listener, weight);
 		public FMOD.RESULT LoadBankFile(StringView filename, LOAD_BANK_FLAGS flags, out Bank bank) =>
 			FMOD_Studio_System_LoadBankFile(handle, filename.Ptr, flags, out bank.handle);
+		public FMOD.RESULT LoadBankMemory(uint8* buffer, int32 bufferLength, LOAD_BANK_FLAGS flags, out Bank bank) =>
+			FMOD_Studio_System_LoadBankMemory(handle, buffer, bufferLength, .LOAD_MEMORY, flags, out bank.handle);
+		public FMOD.RESULT LoadBankMemory(uint8* buffer, int32 bufferLength, LOAD_MEMORY_MODE mode, LOAD_BANK_FLAGS flags, out Bank bank) =>
+			FMOD_Studio_System_LoadBankMemory(handle, buffer, bufferLength, mode, flags, out bank.handle);
 		public FMOD.RESULT LoadBankMemory(uint8[] buffer, LOAD_BANK_FLAGS flags, out Bank bank) =>
-			FMOD_Studio_System_LoadBankMemory(handle, buffer.CArray(), (int32)buffer.Count, LOAD_MEMORY_MODE.LOAD_MEMORY, flags, out bank.handle);
+			FMOD_Studio_System_LoadBankMemory(handle, buffer.CArray(), (int32)buffer.Count, .LOAD_MEMORY, flags, out bank.handle);
+		public FMOD.RESULT LoadBankMemory(uint8[] buffer, LOAD_MEMORY_MODE mode, LOAD_BANK_FLAGS flags, out Bank bank) =>
+			FMOD_Studio_System_LoadBankMemory(handle, buffer.CArray(), (int32)buffer.Count, mode, flags, out bank.handle);
 		public FMOD.RESULT LoadBankCustom(ref BANK_INFO info, LOAD_BANK_FLAGS flags, out Bank bank)
 		{
 		    info.Size = sizeof(BANK_INFO);
