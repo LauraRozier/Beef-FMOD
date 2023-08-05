@@ -1033,9 +1033,9 @@ public struct FMOD
 
 		// Plug-in support.
 		public RESULT SetPluginPath(StringView path) =>
-			FMOD5_System_SetPluginPath(handle, path.Ptr);
+			FMOD5_System_SetPluginPath(handle, path.ToScopeCStr!());
 		public RESULT LoadPlugin(StringView filename, out uint32 plugHandle, uint32 priority = 0) =>
-			FMOD5_System_LoadPlugin(handle, filename.Ptr, out plugHandle, priority);
+			FMOD5_System_LoadPlugin(handle, filename.ToScopeCStr!(), out plugHandle, priority);
 		public RESULT UnloadPlugin(uint32 plugHandle) =>
 			FMOD5_System_UnloadPlugin(handle, plugHandle);
 		public RESULT GetNumNestedPlugins(uint32 plugHandle, out int32 count) =>
@@ -1126,7 +1126,7 @@ public struct FMOD
 
 		// Sound/DSP/Channel/FX creation and retrieval.
 		public RESULT CreateSound(StringView name, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
-			FMOD5_System_CreateSound(handle, name.Ptr, mode, ref exinfo, out sound.handle);
+			FMOD5_System_CreateSound(handle, name.ToScopeCStr!(), mode, ref exinfo, out sound.handle);
 		public RESULT CreateSound(uint8[] data, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
 			FMOD5_System_CreateSound(handle, data, mode, ref exinfo, out sound.handle);
 		public RESULT CreateSound(void* name_or_data, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
@@ -1138,7 +1138,7 @@ public struct FMOD
 		    return CreateSound(name, mode, ref exinfo, out sound);
 		}
 		public RESULT CreateStream(StringView name, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
-			FMOD5_System_CreateStream(handle, name.Ptr, mode, ref exinfo, out sound.handle);
+			FMOD5_System_CreateStream(handle, name.ToScopeCStr!(), mode, ref exinfo, out sound.handle);
 		public RESULT CreateStream(uint8[] data, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
 			FMOD5_System_CreateStream(handle, data, mode, ref exinfo, out sound.handle);
 		public RESULT CreateStream(void* name_or_data, MODE mode, ref CREATESOUNDEXINFO exinfo, out Sound sound) =>
@@ -1154,9 +1154,9 @@ public struct FMOD
 		public RESULT CreateDSPByType(FMOD_DSP.TYPE type, out DSP dsp) =>
 			FMOD5_System_CreateDSPByType(handle, type, out dsp.handle);
 		public RESULT CreateChannelGroup(StringView name, out ChannelGroup channelgroup) =>
-			FMOD5_System_CreateChannelGroup(handle, name.Ptr, out channelgroup.handle);
+			FMOD5_System_CreateChannelGroup(handle, name.ToScopeCStr!(), out channelgroup.handle);
 		public RESULT CreateSoundGroup(StringView name, out SoundGroup soundgroup) =>
-			FMOD5_System_CreateSoundGroup(handle, name.Ptr, out soundgroup.handle);
+			FMOD5_System_CreateSoundGroup(handle, name.ToScopeCStr!(), out soundgroup.handle);
 		public RESULT CreateReverb3D(out Reverb3D reverb) =>
 			FMOD5_System_CreateReverb3D(handle, out reverb.handle);
 		public RESULT PlaySound(Sound sound, ChannelGroup channelgroup, bool paused, out Channel channel) =>
@@ -1228,7 +1228,7 @@ public struct FMOD
 
 		// Network functions
 		public RESULT SetNetworkProxy(StringView proxy) =>
-			FMOD5_System_SetNetworkProxy(handle, proxy.Ptr);
+			FMOD5_System_SetNetworkProxy(handle, proxy.ToScopeCStr!());
 		public RESULT GetNetworkProxy(String proxy, int32 proxylen)
 		{
 		    char8* stringMem = new char8[proxylen]*;
@@ -1499,7 +1499,7 @@ public struct FMOD
 		public RESULT GetNumTags(out int32 numtags, out int32 numtagsupdated) =>
 			FMOD5_Sound_GetNumTags(handle, out numtags, out numtagsupdated);
 		public RESULT GetTag(StringView name, int32 index, out TAG tag) =>
-			FMOD5_Sound_GetTag(handle, name.Ptr, index, out tag);
+			FMOD5_Sound_GetTag(handle, name.ToScopeCStr!(), index, out tag);
 		public RESULT GetOpenState(out OPENSTATE openstate, out uint32 percentbuffered, out bool starving, out bool diskbusy) =>
 			FMOD5_Sound_GetOpenState(handle, out openstate, out percentbuffered, out starving, out diskbusy);
 		public RESULT ReadData(uint8[] buffer) =>
@@ -1534,7 +1534,7 @@ public struct FMOD
 		public RESULT GetSyncPointInfo(void* point, out uint32 offset, TIMEUNIT offsettype) =>
 			FMOD5_Sound_GetSyncPointInfo(handle, point, null, 0, out offset, offsettype);
 		public RESULT AddSyncPoint(uint32 offset, TIMEUNIT offsettype, StringView name, out void* point) =>
-			FMOD5_Sound_AddSyncPoint(handle, offset, offsettype, name.Ptr, out point);
+			FMOD5_Sound_AddSyncPoint(handle, offset, offsettype, name.ToScopeCStr!(), out point);
 		public RESULT DeleteSyncPoint(void* point) =>
 			FMOD5_Sound_DeleteSyncPoint(handle, point);
 

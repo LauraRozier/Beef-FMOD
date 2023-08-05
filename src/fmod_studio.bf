@@ -368,7 +368,7 @@ public struct FMOD_STUDIO
     public struct Util
 	{
         public static FMOD.RESULT ParseID(StringView idString, out FMOD.GUID id) =>
-			FMOD_Studio_ParseID(idString.Ptr, out id);
+			FMOD_Studio_ParseID(idString.ToScopeCStr!(), out id);
 
 		[Import(STUDIO_VERSION.DLL), CLink, CallingConvention(.Stdcall)]
 		private static extern FMOD.RESULT FMOD_Studio_ParseID([MangleConst]char8* idString, out FMOD.GUID id);
@@ -398,7 +398,7 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT SetAdvancedSettings(ref ADVANCEDSETTINGS settings, StringView encryptionKey)
 		{
 			char8* userKey = settings.EncryptionKey;
-			settings.EncryptionKey = encryptionKey.Ptr;
+			settings.EncryptionKey = encryptionKey.ToScopeCStr!();
 			FMOD.RESULT result = SetAdvancedSettings(ref settings);
 			settings.EncryptionKey = userKey;
 			return result;
@@ -419,13 +419,13 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT GetCoreSystem(out FMOD.System coreSystem) =>
 		    FMOD_Studio_System_GetCoreSystem(handle, out coreSystem.handle);
 		public FMOD.RESULT GetEvent(StringView path, out EventDescription _event) =>
-			FMOD_Studio_System_GetEvent(handle, path.Ptr, out _event.handle);
+			FMOD_Studio_System_GetEvent(handle, path.ToScopeCStr!(), out _event.handle);
 		public FMOD.RESULT GetBus(StringView path, out Bus bus) =>
-			FMOD_Studio_System_GetBus(handle, path.Ptr, out bus.handle);
+			FMOD_Studio_System_GetBus(handle, path.ToScopeCStr!(), out bus.handle);
 		public FMOD.RESULT GetVCA(StringView path, out VCA vca) =>
-			FMOD_Studio_System_GetVCA(handle, path.Ptr, out vca.handle);
+			FMOD_Studio_System_GetVCA(handle, path.ToScopeCStr!(), out vca.handle);
 		public FMOD.RESULT GetBank(StringView path, out Bank bank) =>
-			FMOD_Studio_System_GetBank(handle, path.Ptr, out bank.handle);
+			FMOD_Studio_System_GetBank(handle, path.ToScopeCStr!(), out bank.handle);
 
         public FMOD.RESULT GetEventByID(FMOD.GUID id, out EventDescription _event)
 		{
@@ -448,9 +448,9 @@ public struct FMOD_STUDIO
             return FMOD_Studio_System_GetBankByID(handle, ref id, out bank.handle);
 		}
         public FMOD.RESULT GetSoundInfo(StringView key, out SOUND_INFO info) =>
-            FMOD_Studio_System_GetSoundInfo(handle, key.Ptr, out info);
+            FMOD_Studio_System_GetSoundInfo(handle, key.ToScopeCStr!(), out info);
         public FMOD.RESULT GetParameterDescriptionByName(StringView name, out PARAMETER_DESCRIPTION parameter) =>
-            FMOD_Studio_System_GetParameterDescriptionByName(handle, name.Ptr, out parameter);
+            FMOD_Studio_System_GetParameterDescriptionByName(handle, name.ToScopeCStr!(), out parameter);
         public FMOD.RESULT GetParameterDescriptionByID(PARAMETER_ID id, out PARAMETER_DESCRIPTION parameter) =>
 			FMOD_Studio_System_GetParameterDescriptionByID(handle, id, out parameter);
 		public FMOD.RESULT GetParameterLabelByName(StringView name, int32 labelindex, String outLabel)
@@ -459,14 +459,14 @@ public struct FMOD_STUDIO
 			char8* stringMem = new char8[256]*;
 			int32 retrieved = 0;
 
-			FMOD.RESULT result = FMOD_Studio_System_GetParameterLabelByName(handle, name.Ptr, labelindex, stringMem, 256, out retrieved);
+			FMOD.RESULT result = FMOD_Studio_System_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, stringMem, 256, out retrieved);
 
 			if (result == .ERR_TRUNCATED)
 			{
 				delete stringMem;
-                result = FMOD_Studio_System_GetParameterLabelByName(handle, name.Ptr, labelindex, null, 0, out retrieved);
+                result = FMOD_Studio_System_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, null, 0, out retrieved);
 				stringMem = new char8[retrieved]*;
-				result = FMOD_Studio_System_GetParameterLabelByName(handle, name.Ptr, labelindex, stringMem, retrieved, out retrieved);
+				result = FMOD_Studio_System_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, stringMem, retrieved, out retrieved);
 			}
 
 			if (result == .OK)
@@ -504,19 +504,19 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT SetParameterByID(PARAMETER_ID id, float value, bool ignoreseekspeed = false) =>
 			FMOD_Studio_System_SetParameterByID(handle, id, value, ignoreseekspeed);
 		public FMOD.RESULT SetParameterByIDWithLabel(PARAMETER_ID id, StringView label, bool ignoreseekspeed = false) =>
-			FMOD_Studio_System_SetParameterByIDWithLabel(handle, id, label.Ptr, ignoreseekspeed);
+			FMOD_Studio_System_SetParameterByIDWithLabel(handle, id, label.ToScopeCStr!(), ignoreseekspeed);
 		public FMOD.RESULT SetParametersByIDs(PARAMETER_ID[] ids, float[] values, int32 count, bool ignoreseekspeed = false) =>
 			FMOD_Studio_System_SetParametersByIDs(handle, ids, values, count, ignoreseekspeed);
 		public FMOD.RESULT GetParameterByName(StringView name, out float value) =>
 			GetParameterByName(name, out value, var finalValue);
 		public FMOD.RESULT GetParameterByName(StringView name, out float value, out float finalvalue) =>
-			FMOD_Studio_System_GetParameterByName(handle, name.Ptr, out value, out finalvalue);
+			FMOD_Studio_System_GetParameterByName(handle, name.ToScopeCStr!(), out value, out finalvalue);
 		public FMOD.RESULT SetParameterByName(StringView name, float value, bool ignoreseekspeed = false) =>
-			FMOD_Studio_System_SetParameterByName(handle, name.Ptr, value, ignoreseekspeed);
+			FMOD_Studio_System_SetParameterByName(handle, name.ToScopeCStr!(), value, ignoreseekspeed);
 		public FMOD.RESULT SetParameterByNameWithLabel(StringView name, StringView label, bool ignoreseekspeed = false) =>
-			FMOD_Studio_System_SetParameterByNameWithLabel(handle, name.Ptr, label.Ptr, ignoreseekspeed);
+			FMOD_Studio_System_SetParameterByNameWithLabel(handle, name.ToScopeCStr!(), label.ToScopeCStr!(), ignoreseekspeed);
 		public FMOD.RESULT LookupID(StringView path, out FMOD.GUID id) =>
-			FMOD_Studio_System_LookupID(handle, path.Ptr, out id);
+			FMOD_Studio_System_LookupID(handle, path.ToScopeCStr!(), out id);
 		public FMOD.RESULT LookupPath(FMOD.GUID id, String path)
 		{
 			var id;
@@ -556,7 +556,7 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT SetListenerWeight(int32 listener, float weight) =>
 			FMOD_Studio_System_SetListenerWeight(handle, listener, weight);
 		public FMOD.RESULT LoadBankFile(StringView filename, LOAD_BANK_FLAGS flags, out Bank bank) =>
-			FMOD_Studio_System_LoadBankFile(handle, filename.Ptr, flags, out bank.handle);
+			FMOD_Studio_System_LoadBankFile(handle, filename.ToScopeCStr!(), flags, out bank.handle);
 		public FMOD.RESULT LoadBankMemory(uint8[] buffer, LOAD_BANK_FLAGS flags, out Bank bank) =>
 			FMOD_Studio_System_LoadBankMemory(handle, buffer.CArray(), (int32)buffer.Count, LOAD_MEMORY_MODE.LOAD_MEMORY, flags, out bank.handle);
 		public FMOD.RESULT LoadBankCustom(ref BANK_INFO info, LOAD_BANK_FLAGS flags, out Bank bank)
@@ -571,11 +571,11 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT FlushSampleLoading() =>
 			FMOD_Studio_System_FlushSampleLoading(handle);
 		public FMOD.RESULT StartCommandCapture(StringView filename, COMMANDCAPTURE_FLAGS flags) =>
-			FMOD_Studio_System_StartCommandCapture(handle, filename.Ptr, flags);
+			FMOD_Studio_System_StartCommandCapture(handle, filename.ToScopeCStr!(), flags);
 		public FMOD.RESULT StopCommandCapture() =>
 			FMOD_Studio_System_StopCommandCapture(handle);
 		public FMOD.RESULT LoadCommandReplay(StringView filename, COMMANDREPLAY_FLAGS flags, out CommandReplay replay) =>
-			FMOD_Studio_System_LoadCommandReplay(handle, filename.Ptr, flags, out replay.handle);
+			FMOD_Studio_System_LoadCommandReplay(handle, filename.ToScopeCStr!(), flags, out replay.handle);
 		public FMOD.RESULT GetBankCount(out int32 count) =>
 			FMOD_Studio_System_GetBankCount(handle, out count);
 		public FMOD.RESULT GetBankList(out Bank[] array)
@@ -828,7 +828,7 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT GetParameterDescriptionByIndex(int32 index, out PARAMETER_DESCRIPTION parameter) =>
 			FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(handle, index, out parameter);
 		public FMOD.RESULT GetParameterDescriptionByName(StringView name, out PARAMETER_DESCRIPTION parameter) =>
-			FMOD_Studio_EventDescription_GetParameterDescriptionByName(handle, name.Ptr, out parameter);
+			FMOD_Studio_EventDescription_GetParameterDescriptionByName(handle, name.ToScopeCStr!(), out parameter);
 		public FMOD.RESULT GetParameterDescriptionByID(PARAMETER_ID id, out PARAMETER_DESCRIPTION parameter) =>
 			FMOD_Studio_EventDescription_GetParameterDescriptionByID(handle, id, out parameter);
 		public FMOD.RESULT GetParameterLabelByIndex(int32 index, int32 labelindex, String outLabel)
@@ -857,14 +857,14 @@ public struct FMOD_STUDIO
 		    outLabel.Clear();
 	        char8* stringMem = new char8[256]*;
 	        int32 retrieved = 0;
-	        FMOD.RESULT result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.Ptr, labelindex, stringMem, 256, out retrieved);
+	        FMOD.RESULT result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, stringMem, 256, out retrieved);
 
 	        if (result == .ERR_TRUNCATED)
 	        {
 	        	delete stringMem;
-	            result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.Ptr, labelindex, null, 0, out retrieved);
+	            result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, null, 0, out retrieved);
 	            stringMem = new char8[retrieved]*;
-	            result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.Ptr, labelindex, stringMem, retrieved, out retrieved);
+	            result = FMOD_Studio_EventDescription_GetParameterLabelByName(handle, name.ToScopeCStr!(), labelindex, stringMem, retrieved, out retrieved);
 	        }
 
 	        if (result == .OK)
@@ -899,7 +899,7 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT GetUserPropertyByIndex(int32 index, out USER_PROPERTY property) =>
 			FMOD_Studio_EventDescription_GetUserPropertyByIndex(handle, index, out property);
 		public FMOD.RESULT GetUserProperty(StringView name, out USER_PROPERTY property) =>
-			FMOD_Studio_EventDescription_GetUserProperty(handle, name.Ptr, out property);
+			FMOD_Studio_EventDescription_GetUserProperty(handle, name.ToScopeCStr!(), out property);
 		public FMOD.RESULT GetLength(out int32 length) =>
 			FMOD_Studio_EventDescription_GetLength(handle, out length);
 		public FMOD.RESULT GetMinMaxDistance(out float min, out float max) =>
@@ -1112,17 +1112,17 @@ public struct FMOD_STUDIO
 		public FMOD.RESULT SetParameterByID(PARAMETER_ID id, float value, bool ignoreseekspeed = false) =>
 			FMOD_Studio_EventInstance_SetParameterByID(handle, id, value, ignoreseekspeed);
 		public FMOD.RESULT SetParameterByIDWithLabel(PARAMETER_ID id, StringView label, bool ignoreseekspeed = false) =>
-			FMOD_Studio_EventInstance_SetParameterByIDWithLabel(handle, id, label.Ptr, ignoreseekspeed);
+			FMOD_Studio_EventInstance_SetParameterByIDWithLabel(handle, id, label.ToScopeCStr!(), ignoreseekspeed);
 		public FMOD.RESULT SetParametersByIDs(PARAMETER_ID[] ids, float[] values, int32 count, bool ignoreseekspeed = false) =>
 			FMOD_Studio_EventInstance_SetParametersByIDs(handle, ids, values, count, ignoreseekspeed);
 		public FMOD.RESULT GetParameterByName(StringView name, out float value) =>
 			GetParameterByName(name, out value, var _);
 		public FMOD.RESULT GetParameterByName(StringView name, out float value, out float finalvalue) =>
-			FMOD_Studio_EventInstance_GetParameterByName(handle, name.Ptr, out value, out finalvalue);
+			FMOD_Studio_EventInstance_GetParameterByName(handle, name.ToScopeCStr!(), out value, out finalvalue);
 		public FMOD.RESULT SetParameterByName(StringView name, float value, bool ignoreseekspeed = false) =>
-			FMOD_Studio_EventInstance_SetParameterByName(handle, name.Ptr, value, ignoreseekspeed);
+			FMOD_Studio_EventInstance_SetParameterByName(handle, name.ToScopeCStr!(), value, ignoreseekspeed);
 		public FMOD.RESULT SetParameterByNameWithLabel(StringView name, StringView label, bool ignoreseekspeed = false) =>
-			FMOD_Studio_EventInstance_SetParameterByNameWithLabel(handle, name.Ptr, label.Ptr, ignoreseekspeed);
+			FMOD_Studio_EventInstance_SetParameterByNameWithLabel(handle, name.ToScopeCStr!(), label.ToScopeCStr!(), ignoreseekspeed);
 		public FMOD.RESULT KeyOff() =>
 			FMOD_Studio_EventInstance_KeyOff(handle);
 		public FMOD.RESULT SetCallback(EVENT_CALLBACK callback, EVENT_CALLBACK_TYPE callbackmask = .ALL) =>
@@ -1636,7 +1636,7 @@ public struct FMOD_STUDIO
 			FMOD_Studio_CommandReplay_GetCommandAtTime(handle, time, out commandIndex);
 		// Playback
 		public FMOD.RESULT SetBankPath(StringView bankPath) =>
-			FMOD_Studio_CommandReplay_SetBankPath(handle, bankPath.Ptr);
+			FMOD_Studio_CommandReplay_SetBankPath(handle, bankPath.ToScopeCStr!());
 		public FMOD.RESULT Start() =>
 			FMOD_Studio_CommandReplay_Start(handle);
 		public FMOD.RESULT Stop() =>
