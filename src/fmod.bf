@@ -676,11 +676,11 @@ public struct FMOD
 	[CallingConvention(.Stdcall)]
 	public function RESULT SOUND_PCMSETPOS_CALLBACK(void* sound, int32 subSound, uint32 position, TIMEUNIT posType);
 	[CallingConvention(.Stdcall)]
-	public function RESULT FILE_OPEN_CALLBACK([MangleConst]char8* name, uint32* fileSize, void** handle, void* userData);
+	public function RESULT FILE_OPEN_CALLBACK([MangleConst]char8* name, ref uint32 fileSize, ref void* handle, void* userData);
 	[CallingConvention(.Stdcall)]
 	public function RESULT FILE_CLOSE_CALLBACK(void* handle, void* userData);
 	[CallingConvention(.Stdcall)]
-	public function RESULT FILE_READ_CALLBACK(void* handle, void* buffer, uint32 sizeBytes, uint32* bytesRead, void* userData);
+	public function RESULT FILE_READ_CALLBACK(void* handle, void* buffer, uint32 sizeBytes, ref uint32 bytesRead, void* userData);
 	[CallingConvention(.Stdcall)]
 	public function RESULT FILE_SEEK_CALLBACK(void* handle, uint32 pos, void* userData);
 	[CallingConvention(.Stdcall)]
