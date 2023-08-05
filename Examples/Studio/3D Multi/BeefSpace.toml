@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"3D Multi" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "3D Multi"
