@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"Object Pan" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "Object Pan"
