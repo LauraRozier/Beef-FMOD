@@ -1,0 +1,35 @@
+FileVersion = 1
+Dependencies = {corlib = "*", Beef-FMOD = "*"}
+
+[Project]
+Name = "Load Banks"
+StartupObject = "LoadBanks.Program"
+
+[Configs.Debug.Win32]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Debug.Win64]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Release.Win32]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Release.Win64]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Paranoid.Win32]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Paranoid.Win64]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Test.Win32]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[Configs.Test.Win64]
+PostBuildCmds = ["CopyFilesIfNewer(\"$(ProjectDir)/../_media/*\", \"$(TargetDir)/media/\")"]
+
+[[ProjectFolder.Items]]
+Type = "Folder"
+Path = "../_Common"
+AutoInclude = true
