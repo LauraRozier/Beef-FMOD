@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"Event Parameter" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "Event Parameter"
