@@ -19,7 +19,7 @@ public struct FMOD_CODEC
 	/*
 	    Codec constants
 	*/
-	public const uint32 PluginVersion = 1;
+	public const uint32 PLUGIN_VERSION = 1;
 
 	public enum SEEK_METHOD : int32
 	{
@@ -76,7 +76,7 @@ public struct FMOD_CODEC
 	public struct DESCRIPTION
 	{
 	    public uint32                 ApiVersion;
-	    public readonly char8*        Name;
+	    public char8*                 Name;
 	    public uint32                 Version;
 	    public int32                  DefaultAsStream;
 	    public FMOD.TIMEUNIT          TimeUnits;
@@ -93,7 +93,7 @@ public struct FMOD_CODEC
 	[CRepr]
 	public struct WAVEFORMAT
 	{
-	    public readonly char8*   Name;
+	    public char8*            Name;
 	    public FMOD.SOUND_FORMAT Format;
 	    public int32             Channels;
 	    public int32             Frequency;
