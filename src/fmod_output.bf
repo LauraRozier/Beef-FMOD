@@ -86,7 +86,7 @@ public struct FMOD_OUTPUT
 	public struct DESCRIPTION
 	{
 		public uint32                     ApiVersion;
-		public readonly char8*            Name;
+		public char8*                     Name;
 		public uint32                     Version;
 		public METHOD                     Method;
 		public GETNUMDRIVERS_CALLBACK     GetNumDrivers;
