@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"Recording Playback" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "Recording Playback"
