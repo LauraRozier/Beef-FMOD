@@ -103,12 +103,6 @@ public struct FMOD_DSP
 	    MAX
 	}
 
-	public enum DSP_PROCESS_OPERATION
-	{
-	    PROCESS_PERFORM = 0,
-	    PROCESS_QUERY
-	}
-
 	/*
 	    ===================================================================================================
 
@@ -589,7 +583,7 @@ public struct FMOD_DSP
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SHOULDIPROCESS_CALLBACK(ref STATE dsp_state, bool inputsidle, uint32 length, FMOD.CHANNELMASK inmask, int32 inchannels, FMOD.SPEAKERMODE speakermode);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT PROCESS_CALLBACK(ref STATE dsp_state, uint32 length, ref BUFFER_ARRAY inbufferarray, ref BUFFER_ARRAY outbufferarray, bool inputsidle, DSP_PROCESS_OPERATION op);
+	public function FMOD.RESULT PROCESS_CALLBACK(ref STATE dsp_state, uint32 length, ref BUFFER_ARRAY inbufferarray, ref BUFFER_ARRAY outbufferarray, bool inputsidle, PROCESS_OPERATION op);
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SETPARAM_FLOAT_CALLBACK(ref STATE dsp_state, int32 index, float value);
 	[CallingConvention(.Stdcall)]
@@ -663,7 +657,7 @@ public struct FMOD_DSP
         public int32              NumBuffers;
         public int32[]            BufferNumChannels;
         public FMOD.CHANNELMASK[] BufferChannelMask;
-        public void*[]            Buffers;
+        public float[][]          Buffers;
         public FMOD.SPEAKERMODE   SpeakerMode;
     }
 
