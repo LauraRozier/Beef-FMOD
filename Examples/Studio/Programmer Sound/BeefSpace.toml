@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"Programmer Sound" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "Programmer Sound"
