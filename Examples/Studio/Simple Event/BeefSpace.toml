@@ -1,0 +1,6 @@
+FileVersion = 1
+Projects = {"Simple Event" = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+Locked = ["Beef-FMOD"]
+
+[Workspace]
+StartupProject = "Simple Event"
