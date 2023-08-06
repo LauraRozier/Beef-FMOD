@@ -80,10 +80,11 @@ public static
 
 		String str = scope .();
 		FMOD_ErrorString(result, str);
-		Common_Fatal("{0}({2}): FMOD error {2} - {3}", file, line, result, str);
+		Common_Fatal("{0}({1}): FMOD error {2} - {3}", file, line, result, str);
 	}
 
 	/* Cross platform functions (common) */
+	[NoReturn]
 	public static void Common_Fatal(StringView format, params Span<Object> args)
 	{
 		String error = scope .();
@@ -104,7 +105,7 @@ public static
 		    Common_Sleep(50);
 		} while (!Common_BtnDown(.BTN_QUIT));
 
-		Runtime.FatalError(error);
+		Internal.FatalError(error, 3);
 	}
 
 	public static void Common_Draw(StringView format, params Span<Object> args)
