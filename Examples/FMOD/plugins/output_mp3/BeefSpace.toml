@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {output_mp3 = {Path = "."}, Beef-FMOD = {Path = "../../../.."}}
+
+[Workspace]
+StartupProject = "output_mp3"
