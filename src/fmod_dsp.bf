@@ -585,7 +585,7 @@ public struct FMOD_DSP
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SETPOSITION_CALLBACK(ref STATE dsp_state, uint32 pos);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT READ_CALLBACK(ref STATE dsp_state, void* inbuffer, void* outbuffer, uint32 length, int32 inchannels, ref int32 outchannels);
+	public function FMOD.RESULT READ_CALLBACK(ref STATE dsp_state, ref float[] inbuffer, ref float[] outbuffer, uint32 length, int32 inchannels, ref int32 outchannels);
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SHOULDIPROCESS_CALLBACK(ref STATE dsp_state, bool inputsidle, uint32 length, FMOD.CHANNELMASK inmask, int32 inchannels, FMOD.SPEAKERMODE speakermode);
 	[CallingConvention(.Stdcall)]
@@ -599,13 +599,13 @@ public struct FMOD_DSP
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SETPARAM_DATA_CALLBACK(ref STATE dsp_state, int32 index, void* data, uint32 length);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT GETPARAM_FLOAT_CALLBACK(ref STATE dsp_state, int32 index, ref float value, void* valuestr);
+	public function FMOD.RESULT GETPARAM_FLOAT_CALLBACK(ref STATE dsp_state, int32 index, ref float value, char8* valuestr);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT GETPARAM_INT_CALLBACK(ref STATE dsp_state, int32 index, ref int32 value, void* valuestr);
+	public function FMOD.RESULT GETPARAM_INT_CALLBACK(ref STATE dsp_state, int32 index, ref int32 value, char8* valuestr);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT GETPARAM_BOOL_CALLBACK(ref STATE dsp_state, int32 index, ref bool value, void* valuestr);
+	public function FMOD.RESULT GETPARAM_BOOL_CALLBACK(ref STATE dsp_state, int32 index, ref bool value, char8* valuestr);
 	[CallingConvention(.Stdcall)]
-	public function FMOD.RESULT GETPARAM_DATA_CALLBACK(ref STATE dsp_state, int32 index, ref void* data, ref uint32 length, void* valuestr);
+	public function FMOD.RESULT GETPARAM_DATA_CALLBACK(ref STATE dsp_state, int32 index, ref void* data, ref uint32 length, char8* valuestr);
 	[CallingConvention(.Stdcall)]
 	public function FMOD.RESULT SYSTEM_REGISTER_CALLBACK(ref STATE dsp_state);
 	[CallingConvention(.Stdcall)]
@@ -678,15 +678,15 @@ public struct FMOD_DSP
 	public struct PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR
 	{
 		public int32  NumPoints;
-		public float* PointParamValues;
-		public float* PointPositions;
+		public float[] PointParamValues;
+		public float[] PointPositions;
 	}
 
 	[CRepr]
 	public struct PARAMETER_FLOAT_MAPPING
 	{
 		public PARAMETER_FLOAT_MAPPING_TYPE             Type;
-		public PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR PiecewiseLinearMapping;
+		public PARAMETER_FLOAT_MAPPING_PIECEWISE_LINEAR PiecewiseLinearMapping = .();
 	}
 
 	[CRepr]
@@ -695,7 +695,7 @@ public struct FMOD_DSP
 		public float                   Min;
 		public float                   Max;
 		public float                   DefaultVal;
-		public PARAMETER_FLOAT_MAPPING Mapping;
+		public PARAMETER_FLOAT_MAPPING Mapping = .();
 	}
 
 	[CRepr]
@@ -725,10 +725,10 @@ public struct FMOD_DSP
 	public struct PARAMETER_DESC
 	{
 		public PARAMETER_TYPE Type;
-		public char8[16]      Name;
-		public char8[16]      Label;
+		public char8[16]      Name  = .(0,);
+		public char8[16]      Label = .(0,);
 		public char8*         Description;
-		public ParameterDescU Desc;
+		public ParameterDescU Desc  = .();
 
 		[Union]
 		public struct ParameterDescU
@@ -758,8 +758,8 @@ public struct FMOD_DSP
 	public struct PARAMETER_3DATTRIBUTES_MULTI
 	{
 	    public int32                                  NumListeners;
-	    public FMOD.ATTRIBUTES_3D[FMOD.MAX_LISTENERS] Relative;
-	    public float[FMOD.MAX_LISTENERS]              Weight;
+	    public FMOD.ATTRIBUTES_3D[FMOD.MAX_LISTENERS] Relative = .();
+	    public float[FMOD.MAX_LISTENERS]              Weight   = .();
 	    public FMOD.ATTRIBUTES_3D                     Absolute;
 	}
 
@@ -781,7 +781,7 @@ public struct FMOD_DSP
 	{
 	    public int32       Length;
 	    public int32       NumChannels;
-	    private float*[32] SpectrumInternal;
+	    private float*[32] SpectrumInternal = .();
 
         public void GetSpectrum(ref float[][] buffer)
         {
@@ -802,7 +802,7 @@ public struct FMOD_DSP
 	public struct DESCRIPTION
 	{
         public uint32                     PluginSDKVersion;
-        public char8[32]                  Name;
+        public char8[32]                  Name = .(0,);
         public uint32                     Version;
         public int32                      NumInputBuffers;
         public int32                      NumOutputBuffers;
@@ -823,7 +823,7 @@ public struct FMOD_DSP
         public GETPARAM_INT_CALLBACK      GetParameterInt;
         public GETPARAM_BOOL_CALLBACK     GetParameterBool;
         public GETPARAM_DATA_CALLBACK     GetParameterData;
-        public SHOULDIPROCESS_CALLBACK    ShoulDiProcess;
+        public SHOULDIPROCESS_CALLBACK    ShouldIProcess;
         public void*                      UserData;
 
         public SYSTEM_REGISTER_CALLBACK   SysRegister;
@@ -883,8 +883,8 @@ public struct FMOD_DSP
     public struct METERING_INFO
     {
         public int32     NumSamples;
-        public float[32] PeakLevel;
-        public float[32] RmsLevel;
+        public float[32] PeakLevel = .(0,);
+        public float[32] RmsLevel  = .(0,);
         public int16     NumChannels;
     }
 
@@ -896,7 +896,7 @@ public struct FMOD_DSP
 		public float                                   IntegratedLoudness;
 		public float                                   Loudness10thPercentile;
 		public float                                   Loudness95thPercentile;
-		public float[LOUDNESS_METER_HISTOGRAM_SAMPLES] LoudnessHistogram;
+		public float[LOUDNESS_METER_HISTOGRAM_SAMPLES] LoudnessHistogram = .();
 		public float                                   MaxTruePeak;
 		public float                                   MaxMomentaryLoudness;
 	}
@@ -904,6 +904,90 @@ public struct FMOD_DSP
 	[CRepr]
 	public struct LOUDNESS_METER_WEIGHTING_TYPE
 	{
-		public float[32] ChannelWeight;
+		public float[32] ChannelWeight = .(0,);
+	}
+
+	public static mixin INIT_PARAMDESC_FLOAT(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, float min, float max, float defaultval)
+	{
+		paramstruct = .{
+			Type        = .FLOAT,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.FloatDesc.Min          = min;
+		paramstruct.Desc.FloatDesc.Max          = max;
+		paramstruct.Desc.FloatDesc.DefaultVal   = defaultval;
+		paramstruct.Desc.FloatDesc.Mapping.Type = .AUTO;
+	}
+
+	public static mixin INIT_PARAMDESC_FLOAT_WITH_MAPPING(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, float defaultval, float[] values, float[] positions)
+	{
+		paramstruct = .{
+			Type        = .FLOAT,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.FloatDesc.Min                                             = values[0];
+		paramstruct.Desc.FloatDesc.Max                                             = values[values.Count - 1];
+		paramstruct.Desc.FloatDesc.DefaultVal                                      = defaultval;
+		paramstruct.Desc.FloatDesc.Mapping.Type                                    = .PIECEWISE_LINEAR;
+		paramstruct.Desc.FloatDesc.Mapping.PiecewiseLinearMapping.NumPoints        = (int32)values.Count;
+		paramstruct.Desc.FloatDesc.Mapping.PiecewiseLinearMapping.PointParamValues = values;
+		paramstruct.Desc.FloatDesc.Mapping.PiecewiseLinearMapping.PointPositions   = positions;
+	}
+
+	public static mixin INIT_PARAMDESC_INT(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, int32 min, int32 max, int32 defaultval, bool goestoinf, char8*[] valuenames)
+	{
+		paramstruct = .{
+			Type        = .INT,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.IntDesc.Min        = min;
+		paramstruct.Desc.IntDesc.Max        = max;
+		paramstruct.Desc.IntDesc.DefaultVal = defaultval;
+		paramstruct.Desc.IntDesc.GoesToInf  = goestoinf;
+		paramstruct.Desc.IntDesc.ValueNames = valuenames;
+	}
+
+	public static mixin INIT_PARAMDESC_INT_ENUMERATED(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, int32 defaultval, char8*[] valuenames)
+	{
+		paramstruct = .{
+			Type        = .INT,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.IntDesc.Min        = 0;
+		paramstruct.Desc.IntDesc.Max        = (int32)valuenames.Count - 1;
+		paramstruct.Desc.IntDesc.DefaultVal = defaultval;
+		paramstruct.Desc.IntDesc.GoesToInf  = false;
+		paramstruct.Desc.IntDesc.ValueNames = valuenames;
+	}
+
+	public static mixin INIT_PARAMDESC_BOOL(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, bool defaultval, char8*[] valuenames)
+	{
+		paramstruct = .{
+			Type        = .BOOL,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.BoolDesc.DefaultVal = defaultval;
+		paramstruct.Desc.BoolDesc.ValueNames = valuenames;
+	}
+
+	public static mixin INIT_PARAMDESC_DATA(out PARAMETER_DESC paramstruct, StringView name, StringView label, char8* description, int32 datatype)
+	{
+		paramstruct = .{
+			Type        = .DATA,
+			Description = description
+		};
+		Internal.MemCpy(&paramstruct.Name[0],  name.Ptr,  Math.Min(15, name.Length));
+		Internal.MemCpy(&paramstruct.Label[0], label.Ptr, Math.Min(15, label.Length));
+		paramstruct.Desc.DataDesc.DataType = datatype;
 	}
 }
