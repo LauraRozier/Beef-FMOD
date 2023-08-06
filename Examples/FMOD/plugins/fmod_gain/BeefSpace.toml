@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {fmod_gain = {Path = "."}, Beef-FMOD = {Path = "../../../.."}}
+
+[Workspace]
+StartupProject = "fmod_gain"
