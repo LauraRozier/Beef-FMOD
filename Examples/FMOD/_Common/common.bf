@@ -37,7 +37,7 @@ public static
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
 	private static extern FMOD.RESULT FMOD_OS_Debug_Output([MangleConst]char8* format, ...);
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
-	private static extern FMOD.RESULT FMOD_OS_File_Open([MangleConst]char8* name, uint32 mode, out uint32 filesize, out FMOD_OS_FILE* handle);
+	private static extern FMOD.RESULT FMOD_OS_File_Open(char8* name, uint32 mode, out uint32 filesize, out FMOD_OS_FILE* handle);
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
 	private static extern FMOD.RESULT FMOD_OS_File_Close(FMOD_OS_FILE* handle);
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
@@ -61,7 +61,7 @@ public static
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
 	private static extern FMOD.RESULT FMOD_OS_CriticalSection_IsLocked(void* crit, out bool locked);
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
-	private static extern FMOD.RESULT FMOD_OS_Thread_Create([MangleConst]char8* name, function void(void* param) callback, void* param, FMOD.THREAD_AFFINITY affinity, FMOD.THREAD_PRIORITY priority, FMOD.THREAD_STACK_SIZE stacksize, out void* handle);
+	private static extern FMOD.RESULT FMOD_OS_Thread_Create(char8* name, function void(void* param) callback, void* param, FMOD.THREAD_AFFINITY affinity, FMOD.THREAD_PRIORITY priority, FMOD.THREAD_STACK_SIZE stacksize, out void* handle);
 	[Import(FMOD.VERSION.DLL), CLink, CallingConvention(.Stdcall)]
 	private static extern FMOD.RESULT FMOD_OS_Thread_Destroy(void* handle);
 
