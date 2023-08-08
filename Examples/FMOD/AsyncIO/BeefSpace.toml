@@ -1,0 +1,5 @@
+FileVersion = 1
+Projects = {AsyncIO = {Path = "."}, Beef-FMOD = {Path = "../../.."}}
+
+[Workspace]
+StartupProject = "AsyncIO"
