@@ -241,9 +241,7 @@ static class fmod_gain
 	public static FMOD.RESULT FMOD_Gain_shouldiprocess(ref FMOD_DSP.STATE dsp_state, bool inputsidle, uint32 length, FMOD.CHANNELMASK inmask, int32 inchannels, FMOD.SPEAKERMODE speakermode)
 	{
 	    if (inputsidle)
-	    {
 	        return .ERR_DSP_DONTPROCESS;
-	    }
 
 	    return .OK;
 	}
